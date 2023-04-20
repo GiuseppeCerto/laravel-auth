@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreworkRequest;
-use App\Http\Requests\UpdateworkRequest;
-use App\Models\work;
+use App\Http\Requests\StoreWorkRequest;
+use App\Http\Requests\UpdateWorkRequest;
+use App\Models\Work;
 
 class WorkController extends Controller
 {
@@ -15,7 +15,9 @@ class WorkController extends Controller
      */
     public function index()
     {
-        //
+        $works = Work::all();
+
+        return view('works.index', compact('works'));
     }
 
     /**
@@ -25,16 +27,16 @@ class WorkController extends Controller
      */
     public function create()
     {
-        //
+        return view('works.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreworkRequest  $request
+     * @param  \App\Http\Requests\StoreWorkRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreworkRequest $request)
+    public function store(StoreWorkRequest $request)
     {
         //
     }
@@ -42,33 +44,33 @@ class WorkController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\work  $work
+     * @param  \App\Models\Work  $work
      * @return \Illuminate\Http\Response
      */
-    public function show(work $work)
+    public function show(Work $work)
     {
-        //
+        return view('works.show', compact('work'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\work  $work
+     * @param  \App\Models\Work  $work
      * @return \Illuminate\Http\Response
      */
-    public function edit(work $work)
+    public function edit(Work $work)
     {
-        //
+        return view('works.edit', compact('work'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateworkRequest  $request
-     * @param  \App\Models\work  $work
+     * @param  \App\Http\Requests\UpdateWorkRequest  $request
+     * @param  \App\Models\Work  $work
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateworkRequest $request, work $work)
+    public function update(UpdateWorkRequest $request, Work $work)
     {
         //
     }
@@ -76,11 +78,13 @@ class WorkController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\work  $work
+     * @param  \App\Models\Work  $work
      * @return \Illuminate\Http\Response
      */
-    public function destroy(work $work)
+    public function destroy(Work $work)
     {
-        //
+        $work->delete();
+
+        return to_route('works.index');
     }
 }
