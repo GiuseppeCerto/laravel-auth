@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    post create
+    Work create
 @endsection
