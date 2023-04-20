@@ -23,7 +23,7 @@ class WorkSeeder extends Seeder
             $work->name = $faker->unique()->sentence($faker->numberBetween(1, 3));
             $work->client = $faker->sentence(2);
             $work->description = $faker->text(100);
-            $work->slug = Str::slug($work->title, '-');
+            $work->slug = Str::slug($work->name, '-');
             $work->save();
         }
     }
