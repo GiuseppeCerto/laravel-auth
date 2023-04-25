@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreWorkRequest;
 use App\Http\Requests\UpdateWorkRequest;
 use App\Models\Work;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class WorkController extends Controller
 {
@@ -13,11 +15,19 @@ class WorkController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $works = Work::all();
+        $trashed = $request->input('trashed');
 
-        return view('works.index', compact('works'));
+        if ($trashed) {
+            $works = Work::onlyTrashed()->get();
+        } else {
+            $works = Work::all();
+        }
+
+        $num_of_trashed = Work::onlyTrashed()->count();
+
+        return view('works.index', compact('works','num_of_trashed'));
     }
 
     /**
@@ -38,7 +48,13 @@ class WorkController extends Controller
      */
     public function store(StoreWorkRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $data['slug'] = Str::slug($data['name']);
+
+        $work = Work::create($data);
+
+        return to_route('works.show', $work);
     }
 
     /**
@@ -72,7 +88,27 @@ class WorkController extends Controller
      */
     public function update(UpdateWorkRequest $request, Work $work)
     {
-        //
+        $data = $request->validated();
+
+        if ($data['name'] !== $work->name) {
+            $data['slug'] = Str::slug($data['name']);
+        }
+
+        $work->update($data);
+
+        return to_route('works.show', $work);
+    }
+
+    public function restore(Request $request, Work $work)
+    {
+
+        if ($work->trashed()) {
+            $work->restore();
+
+            $request->session()->flash('message', 'the work was restored.');
+        }
+
+        return back();
     }
 
     /**
@@ -83,7 +119,11 @@ class WorkController extends Controller
      */
     public function destroy(Work $work)
     {
-        $work->delete();
+        if ($work->trashed()) {
+            $work->forceDelete();
+        } else {
+            $work->delete();
+        }
 
         return to_route('works.index');
     }

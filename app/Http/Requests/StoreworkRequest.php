@@ -13,7 +13,7 @@ class StoreWorkRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class StoreWorkRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|max:150|unique:works,name',
+            'description' => 'string'
         ];
     }
 }

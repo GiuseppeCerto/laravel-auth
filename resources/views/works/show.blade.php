@@ -8,8 +8,14 @@
                 <p>/{{ $work->slug }}</p>
             </div>
 
-            <div>
+            <div class="d-flex">
                 <a class="btn btn-sm btn-secondary" href="{{ route('works.edit',$work) }}">Edit</a>
+                @if($work->trashed())
+                    <form form action="{{ route('works.restore',$work) }}" method="POST">
+                        @csrf
+                        <input class="btn btn-sm btn-success" type="submit" value="Restore">
+                    </form>
+                @endif
             </div>
             
         </div>
