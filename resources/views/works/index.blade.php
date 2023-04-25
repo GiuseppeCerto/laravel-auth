@@ -58,7 +58,7 @@
                         @if($work->trashed())
                             <form action="{{ route('works.restore',$work) }}" method="POST">
                                 @csrf
-                                <input class="btn btn-sm btn-success" type="submit" value="Ripristina">
+                                <input class="btn btn-sm btn-success" type="submit" value="Restore">
                             </form>
                         @endif
                     </div>
