@@ -18,7 +18,7 @@
                 @else
                     <a class="btn btn-sm btn-light" href="{{ route('works.index',['trashed' => true]) }}">Trash ({{ $num_of_trashed}})</a>
                 @endif
-                    <a class="btn btn-sm btn-primary" href="{{ route('works.create') }}">New work</a>
+                <a class="btn btn-sm btn-primary" href="{{ route('works.create') }}">New work</a>
             </div>
         </div>
     </div>
