@@ -5,11 +5,11 @@
         <h1>Modify: {{ $work->name }}</h1>
     </div>
     <div class="container">
-        <form action="{{ route('works.update',$work) }}" method="POST">
-            @csrf
-            @method('PUT')
+      <form action="{{ route('works.update',$work) }}" method="POST">
+        @csrf
+          @method('PUT')
 
-            <div class="mb-3">
+          <div class="mb-3">
               <label for="name" class="form-label">Title</label>
               <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name',$work->name) }}" id="name" aria-describedby="nameHelp">
               {{-- errore name --}}
@@ -30,6 +30,6 @@
             </div>
         
             <button type="submit" class="btn btn-primary">Save</button>
-          </form>
+        </form>
     </div>
 @endsection
